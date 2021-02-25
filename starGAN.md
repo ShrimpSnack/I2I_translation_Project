@@ -86,3 +86,35 @@ adversarial loss와 같고, 결국엔 이 loss를 최소화시켜야함
 ![image](https://user-images.githubusercontent.com/72767245/109129142-a827a380-7793-11eb-82cf-046b9cc62e8d.png)
 
 Target 도메인으로 바뀌어 생성된 이미지가 target domain으로 분류될 수 있게 최소화시켜야 한다
+
+#### 3. Reconstruction Loss
+![image](https://user-images.githubusercontent.com/72767245/109129337-e329d700-7793-11eb-89e3-4cb9953677f6.png)
+
+- input image의 target domain에 관련된 부분만 변화시킬때 input image 본래 형태를 잘 보존 할 수 없기에 Generator에 한 가지 loss를 더 추가함
+- G는 G가 생성해낸 이미지와 original domain label c'를 input으로 받아, Target domain 부분은 변화시키되 input image x의 형태를 유지하게끔 복원해내기 위해서 cycle consistence loss를 이용
+
+
+---
+
+- λcls, λrec -> hyperparameter입니다. domain 분류와 reconstruction loss들 의 상대적인 중요도를 컨트롤합니다.
+
+- D는 adversarial Loss를 maximize하길 원하기 때문에 마이너스가 붙은것이고, G는 minimize되길 원하기 때문에 마이너스가 붙지 않을것을 확인할 수 있습니다.(논문에서 λcls = 1로, λrec=10으로 설정)
+
+
+---
+
+### Mask Vector
+- CelebA : facial attribute만 가지고 있음
+- RaFD : facial expression만 가지고 있음 
+- 서로 다른 도메인이기 때문에 mask 벡터, m 도입
+- m은 one-hot vector로 나타내어지고, 두 dataset을 합칠떄는 concate 하면 됨
+
+### 전체적인 구조
+![image](https://user-images.githubusercontent.com/72767245/109130905-9a731d80-7795-11eb-85f4-d93eb00838a5.png)
+- CelebA 와 RaFD를 128*128로 동일하게 맞춰준 후 모델에 넣음
+- CelebA에서는 40개의 attribute 중 7개만 사용
+- RaFD은 작은 dataset이므로 모두 사용
+
+
+
+
