@@ -12,3 +12,4 @@
 
 ```Real image / Fake image``` -> ```D``` -> ```Real/Fake``` & ```Domain Classification```
 
+![image](https://user-images.githubusercontent.com/72767245/115122583-99bb7280-9ff3-11eb-8ecc-f010c817b4c7.png)
