@@ -61,3 +61,24 @@ class Generator(nn.Module):
   def __init__(self, conv_dim = 64, c_dim = 5, repeat_num = 6):
     super(Generator, self).__init__()
 ```
+
+layers이라는 list 안에 layers.append을 해줌
+- 첫 conv2d(3 depth + c_dim) 해주어야 함 (depth: 8 -> 64)
+
+```python
+layers = []
+layers.append(nn.Conv2d(3+c_dim, conv_dim, kernel_size = 7, stride = 1, padding = 3, bias = False))
+layers.append(nn.InstanceNorm2d(conv_dim, affine = True, track_running_stats = True))
+layers.append(nn.ReLU(inplace = True))
+```
+**DownSampling Layer**
+
+```python
+curr_dim = conv_dim #64dim
+
+# [conv-instanceNorm-ReLU] 2번 반복
+for i in range(2): 
+  layers.append(nn.Conv2d(curr_dim, curr_dim*2, kernel_size=4, stride=2, padding=1, bias=False))
+  layers.append(nn.InstanceNorm2d(curr_dim*2, affine=True, track_running_stats=True))
+  layers.append(nn.ReLU(inplace=True))
+  curr_dim = curr_dim*2
