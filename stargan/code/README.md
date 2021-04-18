@@ -29,3 +29,13 @@ train 과 test는 ```solver.py``` 내에 저장되어있다.
 - ```test_iters```: 모델 테스트를 위해 학습된 모델을 몇번쨰 step에서 가져 올 것인지
 - ```num_workers```: 몇개의 CPU 코어에 할당할 것인지
 - ```mode```: 모델을 Train으로 할 것인지 test로 할 것인지
+
+
+## ```model.py```
+#### ```Generator```
+- 첫번째 Convolution layer의 output dimension인 ```conv_dim```, domain label 수 ```c_dim```, Residual Block의 수 ```repeat_num```
+```python
+class Generator(nn.Module):
+  def __init__(self, conv_dim = 64, c_dim = 5, repeat_num = 6):
+    super(Generator, self).__init__()
+```
