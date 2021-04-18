@@ -1,4 +1,4 @@
-## StarGAN
+## StarGAN: Unified Generative Adversarial Networks for Multi-Domain Image-to-Image Translation
 [StarGAN - Official PyTorch Implementation](https://github.com/yunjey/stargan)
 
 [StarGAN - paper](https://arxiv.org/abs/1711.09020)
