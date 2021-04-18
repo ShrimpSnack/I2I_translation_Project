@@ -32,6 +32,14 @@ train 과 test는 ```solver.py``` 내에 저장되어있다.
 
 
 ## ```model.py```
+#### ```ResidualBlock```
+- Generator의 Bottleneck부분에 사용되는 ```residual block```
+```python
+class ResidualBlock(nn.Module):
+  def __init__(self, dim_in, dim_out):
+    super(ResidualBlock, self).__init__()
+```
+
 #### ```Generator```
 - 첫번째 Convolution layer의 output dimension인 ```conv_dim```, domain label 수 ```c_dim```, Residual Block의 수 ```repeat_num```
 ```python
