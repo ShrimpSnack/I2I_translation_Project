@@ -40,6 +40,20 @@ class ResidualBlock(nn.Module):
     super(ResidualBlock, self).__init__()
 ```
 
+- layers [conv-instanceNorm-ReLU-Conv-InstanceNorm]
+```python
+self.main = nn.Sequential(
+  nn.Conv2d(dim_in, dim_out, kernel_size = 3, stride = 1, padding = 1, bias = False),
+  nn.InstanceNorm2d(dim_out, affine = True, track_running_stats = True),
+  nn.ReLU(inplace = True),
+  nn.Conv2d(dim_out, dim_out, kernel_size = 3, stride = 1, padding = 1, bias = False),
+  nn.InstanceNorm2d(dim_out, affine = True, track_running_stats = True))
+```
+```python
+def forward(self,x):
+  return x + self.main(x)
+```
+
 #### ```Generator```
 - 첫번째 Convolution layer의 output dimension인 ```conv_dim```, domain label 수 ```c_dim```, Residual Block의 수 ```repeat_num```
 ```python
