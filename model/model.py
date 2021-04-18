@@ -14,9 +14,11 @@ class Generator(nn.Module):
     layers.append(nn.ReLU(inplace = True))
     
     
-  def forward(self, image, domain):
+    
+  def forward(self, image, domain): #image = [1,3,256,256]
     domain = domain.view(domain.size(0), domain.size(1), 1, 1)
-    domain = domain.repeat(1, 1, domain.size(2), domain.size(3))
-    image = torch.cat([image, target], dim = 1)
+    domain = domain.repeat(1, 1, domain.size(2), domain.size(3)) # [1,5, 256, 256] (5 labels)
+    image = torch.cat([image, domain], dim = 1) #[1, 8, 256, 256]
     return self.layer(image)
+  
   
