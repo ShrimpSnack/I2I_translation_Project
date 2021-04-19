@@ -23,3 +23,4 @@ sg
 |21.04.15|StarGANv2 Generator 코드구현|||
 |21.04.22|StarGANv2 MappingNetwork&StyleEncoder 코드구현|||
 |21.04.29|StarGANv2 Discriminator 코드구현|||
+ 
