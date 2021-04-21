@@ -83,3 +83,12 @@ for i in range(2):
   layers.append(nn.ReLU(inplace=True))
   curr_dim = curr_dim*2
 ```
+#### ```Discriminator```
+```python
+class Discriminator(nn.Module):
+  def __init__(self, image_size = 128, conv_dim = 64, c_dim = 5, repeat_num = 6):
+    super(Discriminator, self).__init__()
+    layers = []
+    layers.append(nn.Conv2d(3, conv_dim, kernel_size = 4, stride = 2, padding  = 1))
+    layers.append(nn.LeakyReLU(0.01))
+```
