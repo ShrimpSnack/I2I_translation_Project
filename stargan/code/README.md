@@ -116,3 +116,7 @@ def forward(self, x):
   out_cls = self.conv2(h)
   return out_src, out_cls.view(out_cls.size(0), out_cls.size(1))
 ```
+## ```solver.py```
+
+
+---- TRAIN() 함수 전까지 ----
