@@ -226,3 +226,38 @@ def gradient_penalty(self, y, x):
   dydx_l2norm = torch.sqrt(torch.sum(dydx**2, dim = 1))
   return torch.mean((dydx_l2norm-1) **2)
 ```
+- create_labels()
+
+```python
+    def create_labels(self, c_org, c_dim=5, dataset='CelebA', selected_attrs=None):
+        """Generate target domain labels for debugging and testing."""
+        # Get hair color indices.
+        if dataset == 'CelebA':
+            hair_color_indices = []
+            for i, attr_name in enumerate(selected_attrs):
+                if attr_name in ['Black_Hair', 'Blond_Hair', 'Brown_Hair', 'Gray_Hair']:
+                    hair_color_indices.append(i)
+
+        c_trg_list = []
+        for i in range(c_dim):
+            if dataset == 'CelebA':
+                c_trg = c_org.clone()
+                if i in hair_color_indices:  # Set one hair color to 1 and the rest to 0.
+                    c_trg[:, i] = 1
+                    for j in hair_color_indices:
+                        if j != i:
+                            c_trg[:, j] = 0
+                else:
+                    c_trg[:, i] = (c_trg[:, i] == 0)  # Reverse attribute value.
+            elif dataset == 'RaFD':
+                c_trg = self.label2onehot(torch.ones(c_org.size(0))*i, c_dim)
+
+            c_trg_list.append(c_trg.to(self.device))
+        return c_trg_list
+```
+- c_org: 한 batch를 가져왔을 때 batch_size개의 이미지들의 **실제 도메인 레이블을 담고 있는 tensor**
+```python
+# batch size = 16
+print(c_org)
+-> tensor([2, 5, 2, 2, 3, 6, 0, 0, 4, 4, 6, 3, 4, 4, 5, 5])
+```
