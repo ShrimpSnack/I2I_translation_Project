@@ -193,3 +193,36 @@ build_tensorboard() 함수에서는 logger.py에 정의된 Logger 클래스 객�
         from logger import Logger
         self.logger = Logger(self.log_dir)
 ```
+- update_lr() 함수에서는 g_optimizer와 d_optimizer에서의 learning rate를 업데이트
+
+```python
+def update_lr(self, g_lr, d_lr):
+  for param_group in self.g_optimizer.param_groups:
+    param_group['lr'] = g_lr
+  for param_group in self.d_optimizer.param_groups:
+    param_group['lr'] = d_lr
+```
+- reset_grad()에서는 g_optimizer와 d_oprimizer의 gradient를 0으로 reset
+```python
+def reset_grad(self):
+  self.g_optimizer.zero_grad()
+  self.d_optimizer.zero_grad()
+```
+- denorm 은 out의 모든 원소들을 [0,1] 범위로 만들어서 반환함
+
+```python
+def denorm(self, x):
+  out = (x+1)/2
+  return out.clamp_(0,1)
+```
+- gradient_penalty()
+
+```python
+def gradient_penalty(self, y, x):
+  weight = torch.ones(y.size()).to(self.device)
+  dydx = torch.autograd.grad(outputs = y, inputs = x, grad_outputs = weight, 
+                      retain_graph = True, create_graph = True, only_inputs = True)[0]
+  dydx = dydx.view(dydx.size(0), -1)
+  dydx_l2norm = torch.sqrt(torch.sum(dydx**2, dim = 1))
+  return torch.mean((dydx_l2norm-1) **2)
+```
