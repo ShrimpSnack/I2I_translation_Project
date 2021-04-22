@@ -95,11 +95,11 @@ class Discriminator(nn.Module):
 ```
 - Hidden Layer
 ```    
-    curr_dim = conv_dim
-    for i in range(1, repeat_num):
-      layers.append(nn.Conv2d(curr_dim, curr_dim * 2, kernel_size = 4, stride = 2, padding=1))
-      layers.append(nn.LeakyReLU(0.01))
-      curr_dim = curr_dim * 2
+curr_dim = conv_dim
+for i in range(1, repeat_num):
+  layers.append(nn.Conv2d(curr_dim, curr_dim * 2, kernel_size = 4, stride = 2, padding=1))
+  layers.append(nn.LeakyReLU(0.01))
+  curr_dim = curr_dim * 2
 ```
 - Output Layer
 ```python
