@@ -184,3 +184,12 @@ def restore_model(self, resume_iters):
   self.D.load_state_dict(torch.load(D_path, map_location=lambda storage, loc: storage))
 ```
 
+build_tensorboard() 함수에서는 logger.py에 정의된 Logger 클래스 객체를 생성
+
+- tensorboard: 데이터를 시각화해서 그래프로 보기 좋게 표현해주는 Tool 
+
+```python
+  def build_tensorboard(self):
+        from logger import Logger
+        self.logger = Logger(self.log_dir)
+```
