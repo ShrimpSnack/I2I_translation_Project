@@ -120,3 +120,26 @@ def forward(self, x):
 
 
 ---- TRAIN() 함수 전까지 ----
+
+- Solver 클래스는 nn.Module을 상속 받지 않음
+- Solver 객체를 호출할 때에는 매개변수에 celeb_loader, rafd_loader, config 를 넘겨줌
+
+```python
+class Solver(object):
+  def __init__(self, celeba_loader, rafd_loader, config):
+  ...
+  
+  def build_model(self):
+    if self.dataset in ['CelebA', 'RaFD']:
+      self.G = Generator(self.g_conv_dim, self.c_dim, self.g_repeat_num)
+      self.D = Discriminator(self.image_size, self.d_conv_dim, self.c_dim, self.d_repeat_num)
+```
+
+- build_model함수에서는 Generator와 Discriminator를 만듦
+
+```python
+self.g_optimizer = torch.optim.Adam(self.G.parameters(), self.g_lr, [self.beta1, self.beta2])
+self.d_optimizer = torch.optim.Adam(self.D.parameters(), sel.d_lr, [self.beta1, self.beta2])
+```
+- ```main.py```에서 learning rate와 beta 값에 대한 기본 정보를 확인할 수 있다
+
