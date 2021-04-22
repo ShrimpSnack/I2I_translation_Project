@@ -119,7 +119,7 @@ def forward(self, x):
 ## ```solver.py```
 
 
----- TRAIN() 함수 전까지 ----
+### ---- TRAIN() 함수 전까지 ----
 
 - Solver 클래스는 nn.Module을 상속 받지 않음
 - Solver 객체를 호출할 때에는 매개변수에 celeb_loader, rafd_loader, config 를 넘겨줌
