@@ -127,19 +127,60 @@ def forward(self, x):
 ```python
 class Solver(object):
   def __init__(self, celeba_loader, rafd_loader, config):
-  ...
-  
-  def build_model(self):
-    if self.dataset in ['CelebA', 'RaFD']:
-      self.G = Generator(self.g_conv_dim, self.c_dim, self.g_repeat_num)
-      self.D = Discriminator(self.image_size, self.d_conv_dim, self.c_dim, self.d_repeat_num)
+    # config 파일 내에서 값들 초기화
+    ...
+    # Build the model and tensorboard
+    self.build_model()
+    if self.use_tensorboard():
+      self.build_tensorboard()
 ```
-
 - build_model함수에서는 Generator와 Discriminator를 만듦
 
 ```python
-self.g_optimizer = torch.optim.Adam(self.G.parameters(), self.g_lr, [self.beta1, self.beta2])
-self.d_optimizer = torch.optim.Adam(self.D.parameters(), sel.d_lr, [self.beta1, self.beta2])
+    # Create a generator and a discriminator
+    def build_model(self):
+        # dataset이 하나일 때, self.c_dim
+        if self.dataset in ['CelebA', 'RaFD']:
+            self.G = Generator(self.g_conv_dim, self.c_dim, self.g_repeat_num)
+            self.D = Discriminator(self.image_size, self.d_conv_dim, self.c_dim, self.d_repeat_num) 
+        # dataset이 두개 다 일 때, self.c_dim + self.c_dim + 2
+        elif self.dataset in ['Both']:
+            self.G = Generator(self.g_conv_dim, self.c_dim+self.c2_dim+2, self.g_repeat_num)   # 2 for mask vector.
+            self.D = Discriminator(self.image_size, self.d_conv_dim, self.c_dim+self.c2_dim, self.d_repeat_num)
+            
+        # main.py에서 learning rate와 beta 값에 대한 기본 정보를 확인할 수 있음
+        self.g_optimizer = torch.optim.Adam(self.G.parameters(), self.g_lr, [self.beta1, self.beta2])
+        self.d_optimizer = torch.optim.Adam(self.D.parameters(), self.d_lr, [self.beta1, self.beta2])
+        
+        self.print_network(self.G, 'G')
+        self.print_network(self.D, 'D')
+            
+        self.G.to(self.device)
+        self.D.to(self.device)
 ```
-- ```main.py```에서 learning rate와 beta 값에 대한 기본 정보를 확인할 수 있다
+
+- print_network() 함수는 인자로 모델과 모델의 이름을 전달받아 모델의 네트워크 정보를 출력하는 역할을 함
+- for 문에서는 model의 모든 파라미터의 원소 수를 numel()함수로 구해 num_params에 더한다
+
+```python
+def print_network(self, model, name):
+  num_params = 0
+  for p in model.parameters():
+    num_params += p.numel()
+  print(model)
+  print(name)
+  print("The number of parameters: {}" .format(num_params))
+```
+
+- restore_model()함수는 이전에 학습하여 저장된 모델을 불러오는 역할
+
+```python
+def restore_model(self, resume_iters):
+  print('Loading the trained models from step {}...'.format(resume_iters))
+  G_path = os.path.join(self.model_save_dir, '{}-G.ckpt'.format(resume_iters))
+  D_path = os.path.join(self.model_save_dir, '{}-D.ckpt'.format(resume_iters))
+  
+  self.G.load_state_dict(torch.load(G_path, map_location=lambda storage, loc: storage))
+  self.D.load_state_dict(torch.load(D_path, map_location=lambda storage, loc: storage))
+```
 
