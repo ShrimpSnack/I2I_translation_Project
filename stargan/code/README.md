@@ -87,6 +87,15 @@ for i in range(2):
   layers.append(nn.ReLU(inplace=True))
   curr_dim = curr_dim*2
 ```
+
+- 마지막에 self.main = nn.Sequential(*layers) 로 합쳐줌
+```python
+layers.append(nn.Conv2d(curr_dim, 3, kernel_size = 7, stride = 1, padding = 3, bias = False)
+layers.append(nn.Tanh())
+self.main = nn.Sequential(*layers)
+```
+
+
 #### ```Discriminator```
 - Input Layer
 ```python
