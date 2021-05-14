@@ -6,6 +6,18 @@
   - 각 데이터마다 normalization을 따로함. 심지어 filter들의 종류와도 관계없이 다 따로 normalization 진행
 
 
+```python
+# Without Learnable Parameters
+m = nn.InstanceNorm2d(100)
+
+# With Learnable Parameters
+m = nn.InstanceNorm2d(100, affine = True)
+
+input = torch.randn(20, 100, 35, 45)
+output = m(input)
+
+```
+
 # Layer Normalization
 - batch N과 무관하게 평균 & 표준편차를 구함
 - 동일한 층의 뉴런간의 정규화
