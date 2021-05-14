@@ -22,3 +22,6 @@
 - scale and shift함
 - N, H, W에 대해서만 연산을 진행
 - 평균과 표준편차는 channel map C와 무관하게 계산되어 batch N에 대해서 normalization 된다.
+
+
+![image](https://user-images.githubusercontent.com/72767245/118239855-409d0c80-b4d5-11eb-853e-41673fbaf167.png)
