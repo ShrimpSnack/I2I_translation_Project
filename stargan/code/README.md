@@ -32,6 +32,10 @@ train 과 test는 ```solver.py``` 내에 저장되어있다.
 
 
 ## ```model.py```
+
+![image](https://user-images.githubusercontent.com/72767245/118234112-dd5bac00-b4cd-11eb-8778-86f259bc8d75.png)
+
+
 #### ```ResidualBlock```
 - Generator의 Bottleneck부분에 사용되는 ```residual block```
 ```python
