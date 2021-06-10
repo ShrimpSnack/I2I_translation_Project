@@ -6,3 +6,8 @@
 
 
 ![image](https://user-images.githubusercontent.com/72767245/121519581-d5d7e600-ca2c-11eb-9e8d-185865b096ba.png)
+
+
+## Full Architecture
+
+![image](https://user-images.githubusercontent.com/72767245/121520433-dde45580-ca2d-11eb-848d-6db3907b6588.png)
