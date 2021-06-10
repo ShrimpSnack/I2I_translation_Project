@@ -90,7 +90,6 @@ class Generator(nn.Module):
  '''
  kernel_size 계산하는거 확인
  output에서 src와 cls다르게 하는 거 확인
- 
  '''
 
 class Discriminator(nn.Module):
