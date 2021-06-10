@@ -4,7 +4,7 @@
 ### 목록
 
 ---
-sg
+
 #### starGAN: [arXiv](https://arxiv.org/pdf/1711.09020.pdf)
 #### starGANv2
 #### CycleGAN: [arXiv](https://arxiv.org/pdf/1703.10593.pdf)
