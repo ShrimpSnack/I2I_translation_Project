@@ -110,11 +110,18 @@ def get_loader(image_dir, attr_path, selected_attrs, crop_size = 178, image_size
                batch_size = 16, dataset = 'CelebA', mode = 'train', num_workers = 1):
   transform = []
   if mode == 'train':
+    # 데이터 증강을 위함(train에서만 사용)
     transform.append(T.RandomHorizontalFlip())
+  # 이미지 중앙에서 crop_size x crop_size 크기로 crop
   transform.append(T.CenterCrop(crop_size))
+  # 이미지 사이즈를 image_size x image_size로 resize
   transform.append(T.Resize(image_size))
+  # tensor 형식으로 변환
   transform.append(T.ToTensor())
+  # 정규화(mean과 std를 이용)
   transform.append(T.Normalize(mean =(0.5, 0.5, 0.5), std = (0.5, 0.5, 0.5)))
+  
+  ##compose 함수를 통하여 transform 리스트에 넣은 여러 transform을 한꺼번에 진행
   transform = T.Compose(transform)
   
   # Dataset 만드는 과정, RaFD는 torchvision 내 ImageFolder 사용
