@@ -1,5 +1,15 @@
+import os
+import argparse
+from solver import Solver
+from data_loader import get_loader
+from torch.backends import cudnn
+
 def main(config):
   cudnn.benchmark = True 
+  
+  # Dataloader 초기화
+  celeba_loader = None
+  rafd_loader = None
   
   # Create Dataloader
   if config.dataset in ['CelebA','Both']:
@@ -20,6 +30,12 @@ def main(config):
       solver.train()
     elif config.dataset in ['Both']:
       solver.train_multi()
+  # Test
+  elif config.mode == 'test':
+    if config.dataset in ['CelebA', 'RaFD']:
+      solver.test()
+    elif config.dataset in ['Both']:
+      solver.test_multi()
 
                                
 ## parsing
