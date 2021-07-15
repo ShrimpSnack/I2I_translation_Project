@@ -1,3 +1,10 @@
+# Main.py
+- dataloader(```data_loader.py```)
+- build model (```solver.py```)
+- Train (```solver.py```)
+
+
+
 ## Network Architecture
 
 
@@ -16,9 +23,3 @@
 - model를 **build**하고 **training**하는 ```solver.py```
 
 ![image](https://user-images.githubusercontent.com/72767245/121520433-dde45580-ca2d-11eb-848d-6db3907b6588.png)
-
-
-### Main.py
-- dataloader생성(```data_loader.py```)
-- build model (```solver.py```)
-- Train (```solver.py```)
