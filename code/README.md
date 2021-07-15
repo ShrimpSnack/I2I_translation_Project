@@ -54,6 +54,26 @@ RaFD :
 
 ```
 
+## Generator(CycleGAN의 generator)
+- starGAN의 generator부분은 cycleGAN의 architecture을 채택
+  - input에서 channel의 경우 image와 domain 정보가 channel-wise로 concat되기 때문에 domain의 개수가 input의 channel 개수에 추가
+- stargan은 affine을 True로 사용, cycleGAN에서는 instance norm의 affine을 False로 사용
+  - affine이 True이면 output값에 gamma를 곱하고 beta를 더한다.
+    - 여기서 gamma와 beta는 learnable parameter이며, beta는 bias 역할을 함
+    - 따라서 conv2d에서 bias가 필요가 없음
+- ```batch Normalization```을 사용하지 않고 ```instance normalization```을 사용하는 이유는 외견적 invariance을 보존해, style을 변환하는 task에서 좋은 결과를 얻기 위하여
+- ```affine``` 사용 >> 통계적 추정치로 인해, style 변환시 품질이 하락할 것임
+  - 근데 왜 Affine을 사용????
+- ReLU의 inplace는 ```True```
+- 최종 layer에서는 normalization된 input image의 값 범위가 -1~1이라 결과값의 범위도 같게 하기 위해서 ```tanh```사용
+  - 대부분의 generator에서 tanh 사용
+
+## Discriminator(pix2pix의 patchGAN)
+### patchGAN
+- ```vanilaGAN```의 경우 output은 real/fake을 예측하는 단일 값
+- ```patchGAN```의 경우 output은 16개의 값을 가짐
+  - 여러 값을 가진다면 input image의 receptive field가 제한
+
 ---
 
 
