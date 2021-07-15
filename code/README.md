@@ -69,11 +69,20 @@ RaFD :
   - 대부분의 generator에서 tanh 사용
 
 ## Discriminator(pix2pix의 patchGAN)
+- patch 단위로 Discriminator
+- ```pixelGAN```은 1x1 patch에 대해 진위여부 확인
+- ```patchGAN```은 NxN사이즈의 패치 영역에 대해 진위여부 판단
+- ```ImageGAN```은 VanillaGAN 처럼 전체 영역에 대해 진위여부 판단
+
+
 ### patchGAN
 - ```vanilaGAN```의 경우 output은 real/fake을 예측하는 단일 값
 - ```patchGAN```의 경우 output은 16개의 값을 가짐
   - 여러 값을 가진다면 input image의 receptive field가 제한
-
+- receptive field가 제한됨
+  - 단일 값을 이용하여 backprop을 진행하면 receptive field가 input image의 전체이기 때문에 low frequency(structure)를 잘 capture할 수 있지만, high frequency(detail)은 잘 capture못함.
+  - detail한 부분을 잘 표현하기 위해서 간단한 attention을 가해주면 되는데 receptive field를 image의 부분으로 한정하는 방법이 있음
+  - 이렇게 하면 부분마다 backprop을 진행해 detail한 부분을 잘 표현 가능
 ---
 
 
