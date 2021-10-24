@@ -35,4 +35,16 @@ class ImageFolder(Dataset):
     self.transform = transform
     self.samples = sorted(glob.glob(os.path.join(path + '/*.*')))
     
-                          
+  def __getitem__(self, index):
+    sample = Image.open(self.samples[index])
+    w, h = sample.size
+    sample_target = sample.crop((0, 0, w/2, h))
+    sample_source = sample.crop((w/2, 0, w, h))
+    
+    sample_source = self.transform(sample_source)
+    sample_target = self.transform(sample_target)
+    
+    return sample_source, sample_target
+  
+  def __len__(self):
+    return len(self.samples)
